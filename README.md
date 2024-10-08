@@ -1,5 +1,5 @@
 Prompt GPT
-
+![Prompt GPT Screenshot](./public/assets/images/promptgpt.png)
 
  Overview
 

@@ -26,5 +26,5 @@ To get started with Prompt GPT, follow these steps:
 
 1. Clone the Repository:
    ```bash
-   git clone [https://github.com/yourusername/PromptGPT.git](https://github.com/oluwatayo-david/PromptGpt.git)
+   git clone https://github.com/yourusername/PromptGPT.git
    cd PromptGPT

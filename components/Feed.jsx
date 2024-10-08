@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'; // Make sure to import the skeleton's CSS
 import PromptCard from "@/components/PromptCard";
+import { showErrorToast } from "./NotificationContainer";
 
 const PromptCardSkeleton = () => {
   return (
@@ -52,12 +53,17 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     setIsLoading(true);
-    const response = await fetch("/api/prompt");
-    const data = await response.json();
-
-    setAllPosts(data);
-    setIsLoading(false);
+    try {
+      const response = await fetch("/api/prompt", { cache: "no-store" }); // Disable caching to always get fresh data
+      const data = await response.json();
+      setAllPosts(data);
+    } catch (error) {
+      showErrorToast("Error fetching feeds")
+    } finally {
+      setIsLoading(false);
+    }
   };
+
 
   useEffect(() => {
     fetchPosts();

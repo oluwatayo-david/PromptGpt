@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  headers: () => [
+    {
+      source: '/',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'no-store',
+        },
+      ],
+    },
+  ],
     experimental: {
       serverComponentsExternalPackages: ["mongoose"], // Keep this if you are using mongoose
     },

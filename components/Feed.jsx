@@ -53,11 +53,14 @@ const Feed = () => {
   const [searchedResults, setSearchedResults] = useState([]);
 
 
-  // Use SWR to fetch posts with revalidateOnFocus and refreshInterval
   const { data: allPosts = [], error, isLoading, mutate } = useSWR('/api/prompt', fetcher, {
-    revalidateOnFocus: true, // Automatically refetch on focus
-    refreshInterval: 5000, // Refetch every 5 seconds
+    revalidateOnFocus: true, 
+    refreshInterval: 5000,
   });
+
+  useEffect(() => {
+    mutate('/api/prompt');
+  }, []); 
 
   if (error) showErrorToast("Error fetching feeds");
 

@@ -2,31 +2,31 @@
 const nextConfig = {
   headers: () => [
     {
-      source: '/',
+      source: '/api/prompt',
       headers: [
         {
           key: 'Cache-Control',
-          value: 'no-store',
+          value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
         },
       ],
     },
   ],
-    experimental: {
-      serverComponentsExternalPackages: ["mongoose"], // Keep this if you are using mongoose
-    },
-    images: {
-      domains: ["lh3.googleusercontent.com"], // Configure external image domains
-    },
 
-    
-    webpack(config) {
-      config.experiments = {
-        ...config.experiments,
-        topLevelAwait: true, // Enabling top-level await in Webpack
-      };
-      return config;
-    },
-  };
-  
-  export default nextConfig;
-  
+  experimental: {
+    serverComponentsExternalPackages: ["mongoose"], // Keep this if you are using mongoose
+  },
+
+  images: {
+    domains: ["lh3.googleusercontent.com"], 
+  },
+
+  webpack(config) {
+    config.experiments = {
+      ...config.experiments,
+      topLevelAwait: true, 
+    };
+    return config;
+  },
+};
+
+export default nextConfig;

@@ -4,11 +4,10 @@ import Provider from "@/components/Provider";
 import ToastNotification from "@/components/NotificationContainer";
 
 export const metadata = {
-  title: "Promptgpt",
+  title: "PromptGpt",
   description: "Discover & Share AI Prompts",
 };
 
-export const fetchCache = 'force-no-store';
 
 
 const RootLayout = ({ children }) => (

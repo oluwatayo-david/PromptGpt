@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'; // Make sure to import the skeleton's CSS
+import 'react-loading-skeleton/dist/skeleton.css'; 
 import PromptCard from "@/components/PromptCard";
 import { showErrorToast } from "./NotificationContainer";
+import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const PromptCardSkeleton = () => {
   return (
@@ -43,31 +46,20 @@ const PromptCardList = ({ data, isLoading, handleTagClick }) => {
 };
 
 const Feed = () => {
-  const [allPosts, setAllPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
   // Search states
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
-  const fetchPosts = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/prompt", { cache: "no-store" }); // Disable caching to always get fresh data
-      const data = await response.json();
-      setAllPosts(data);
-    } catch (error) {
-      showErrorToast("Error fetching feeds")
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
+  // Use SWR to fetch posts with revalidateOnFocus and refreshInterval
+  const { data: allPosts = [], error, isLoading, mutate } = useSWR('/api/prompt', fetcher, {
+    revalidateOnFocus: true, // Automatically refetch on focus
+    refreshInterval: 5000, // Refetch every 5 seconds
+  });
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  if (error) showErrorToast("Error fetching feeds");
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search

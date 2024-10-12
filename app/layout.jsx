@@ -8,6 +8,9 @@ export const metadata = {
   description: "Discover & Share AI Prompts",
 };
 
+export const fetchCache = 'force-no-store';
+
+
 const RootLayout = ({ children }) => (
   <html lang="en">
     <body>

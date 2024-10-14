@@ -1,8 +1,8 @@
 "use client";
 
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'; 
+import 'react-loading-skeleton/dist/skeleton.css';
 import PromptCard from "@/components/PromptCard";
 import { showErrorToast } from "./NotificationContainer";
 import useSWR from 'swr';
@@ -54,13 +54,10 @@ const Feed = () => {
 
 
   const { data: allPosts = [], error, isLoading, mutate } = useSWR('/api/prompt', fetcher, {
-    revalidateOnFocus: true, 
-    refreshInterval: 5000,
+    revalidateOnFocus: true,
+
   });
 
-  useEffect(() => {
-    mutate('/api/prompt');
-  }, []); 
 
   if (error) showErrorToast("Error fetching feeds");
 
